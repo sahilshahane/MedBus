@@ -55,13 +55,13 @@ function useLocation() {
   const askLocation = () => {
     if (navigator.geolocation) {
       getPosition()
-        .then((position) => {
+        .then(({ coords: { longitude, latitude } }) => {
           setCoordinates({
-            lng: position.coords.longitude,
-            lat: position.coords.latitude,
+            lng: longitude,
+            lat: latitude,
           })
-          setPermission(PermissionType.GRANTED)
         })
+        .then(() => setPermission(PermissionType.GRANTED))
         .catch((error) => {
           // alert("Please Grant Location access")
           setPermission(PermissionType.DENIED)
