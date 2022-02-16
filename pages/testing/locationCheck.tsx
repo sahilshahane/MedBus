@@ -5,7 +5,7 @@ import Map from '@components/Map'
 import { Box } from '@chakra-ui/layout'
 
 const LocationCheck: NextPage = () => {
-  const [coordinates, permission] = useStaticLocation()
+  const [coords, permission] = useStaticLocation()
 
   return (
     <>
@@ -19,7 +19,7 @@ const LocationCheck: NextPage = () => {
 
       {permission == PermissionType.GRANTED && (
         <Box w='100%' h='100vh'>
-          <Map height='100%' width='100%' center={coordinates} />
+          <Map height='100%' width='100%' lat={coords.lat} lng={coords.lng} />
         </Box>
       )}
     </>

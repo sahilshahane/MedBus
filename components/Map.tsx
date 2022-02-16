@@ -1,17 +1,8 @@
 import type { NextPage } from 'next'
 import { Box } from '@chakra-ui/layout'
 import GoogleMaps from 'google-map-react'
-import type { MapOptions as GoogleMapOptions } from 'google-map-react'
 import type googleMapReact from 'google-map-react'
-
-// const gMapOptions: MapOptions = {
-//   height,
-// }
-
-interface MapOptions extends googleMapReact.Props {
-  height: number | string
-  width?: number | string | 'auto'
-}
+import Marker from '@components/MapMarker'
 
 enum ZoomLevel {
   WORLD = 1,
@@ -28,15 +19,25 @@ interface googleMapsPropModified extends googleMapReact.Props {
 const GoogleMapsDefaultProps: googleMapsPropModified = {
   zoom: ZoomLevel.STREETS,
   bootstrapURLKeys: {
-    key: 'AIzaSyDXUOcx0aIA_zYKTLUbXs2tgcHh_nxW9A8',
+    key: process.env.NEXT_PUBLIC_GOOGLEMAPS_KEY as string,
   },
 }
 
+interface MapOptions extends googleMapReact.Props {
+  height: number | string
+  width?: number | string | 'auto'
+
+  lat: number
+  lng: number
+}
+
 const Map: NextPage<MapOptions> = (props) => {
-  const { width = 'auto', height } = props
+  const { width = 'auto', height, lat, lng } = props
   return (
     <Box h={height} w={width} bg='grey'>
-      <GoogleMaps {...GoogleMapsDefaultProps} center={props.center} />
+      <GoogleMaps {...GoogleMapsDefaultProps} center={{ lat, lng }}>
+        <Marker type='normal' lat={lat} lng={lng} />
+      </GoogleMaps>
     </Box>
   )
 }
