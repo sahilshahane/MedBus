@@ -22,10 +22,15 @@ const getStatusLabel = (type: StatusKind) => {
   }
 }
 
-const AuthAlert: NextPage<AuthAlertProps> = ({ status, onClickCloseBtn }) => {
+const AuthAlert: NextPage<AuthAlertProps> = (props) => {
+  const { status, onClickCloseBtn } = props
   return (
     <>
-      <Alert status={getStatusLabel(status.type)} variant='top-accent'>
+      <Alert
+        status={getStatusLabel(status.type)}
+        variant='top-accent'
+        roundedBottom='2xl'
+      >
         <AlertIcon />
         {status.title && <AlertTitle mr={2}>{status.title}</AlertTitle>}
         {status.message && (

@@ -1,3 +1,5 @@
+import { NextApiRequest } from 'next'
+
 type StatusKind = 'error' | 'loading' | 'success' | 'info'
 
 interface Status {
@@ -9,4 +11,49 @@ interface Status {
 
 type OperationType = 'signin' | 'signup'
 
-export type { Status, OperationType, StatusKind }
+interface AuthenticateResponse {
+  message?: string
+  title?: string
+  type?: AccountTypes
+  redirect?: string
+}
+type SendDataFuncType = (
+  URL: string,
+  data: any,
+  redirectURL?: string
+) => Promise<any>
+
+type AccountTypes = 'hospital' | 'driver'
+
+interface HospitalSignUpReqestData {
+  email: string
+  password: string
+  type: 'hospital'
+  hospital_placeid: string
+}
+
+interface DriverSignUpReqestData {
+  email: string
+  password: string
+  type: 'driver'
+  hospital_placeid: string
+  driver_name: string
+  phone: string
+}
+
+interface SignInRequestData {
+  email: string
+  password: string
+}
+
+export type {
+  HospitalSignUpReqestData,
+  DriverSignUpReqestData,
+  SignInRequestData,
+  Status,
+  OperationType,
+  StatusKind,
+  AuthenticateResponse,
+  SendDataFuncType,
+  AccountTypes,
+}

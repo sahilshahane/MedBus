@@ -1,0 +1,25 @@
+POST http://localhost:3000/api/signup
+Accept: application/json
+Content-Type: application/json
+
+{
+ "email": "sahilw@2hospital.com",
+ "password": "123",
+ "type": "hospital",
+ "hospital_placeid":"ChIsJb_iYL-4RdkgRfILoKI4ebYM"
+}
+
+###
+
+POST http://localhost:3000/api/signin
+Accept: application/json
+Content-Type: application/json
+
+{
+ "email": "sahil@hospital.com",
+ "password": "123"
+}
+
+###
+
+GET http://localhost:3000/hospital/admin/dashboard

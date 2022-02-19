@@ -20,7 +20,8 @@
       "@styles/*": ["./styles/*"],
       "@hooks/*": ["./hooks/*"],
       "@contexts/*": ["./contexts/*"],
-      "@typedef/*": ["./typedefs/*"]
+      "@typedef/*": ["./typedefs/*"],
+      "@libs/*": ["./libs/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
