@@ -1,1 +1,1 @@
-# Visit - https://medbus.vercel.app
+# Visit - https://med-bus.vercel.app
