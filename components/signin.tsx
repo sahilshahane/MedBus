@@ -17,7 +17,6 @@ const handleSubmit =
       password: form['password'].value,
     }
     const URL = '/api/signin'
-
     sendData(URL, data).finally(() => setControlsEnabled(true))
   }
 
