@@ -46,6 +46,13 @@ interface SignInRequestData {
   password: string
 }
 
+type REQUEST_STATUSES =
+  | 'pending'
+  | 'approved'
+  | 'arriving'
+  | 'returning'
+  | 'hospitalized'
+
 export type {
   HospitalSignUpReqestData,
   DriverSignUpReqestData,
@@ -56,4 +63,5 @@ export type {
   AuthenticateResponse,
   SendDataFuncType,
   AccountTypes,
+  REQUEST_STATUSES,
 }
