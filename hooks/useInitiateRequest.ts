@@ -13,6 +13,13 @@ export enum REQUEST_STATUS {
   WAITING,
   FAILED,
   SUCCESS,
+  CHECKING_PREVIOUS_REQUEST,
+  PREVIOUS_REQUEST_EXISTS,
+}
+
+// TODO
+const isRequestValid = (REQUEST_ID: string) => {
+  return true
 }
 
 const useInitiateRequest = () => {
@@ -23,8 +30,21 @@ const useInitiateRequest = () => {
     useState<GenerateRequestResponse>({
       REQUEST_ID: '',
     })
+
   useEffect(() => {
     if (requestMade || permission !== PermissionType.GRANTED) return
+
+    setRequestStatus(REQUEST_STATUS.CHECKING_PREVIOUS_REQUEST)
+
+    const REQ_ID = window.localStorage.getItem('REQUEST_ID')
+
+    if (REQ_ID != null && isRequestValid(REQ_ID)) {
+      setREQUEST_RESPONSE({
+        REQUEST_ID: REQ_ID,
+      })
+      setRequestStatus(REQUEST_STATUS.PREVIOUS_REQUEST_EXISTS)
+      return
+    }
 
     setRequestMade(true)
     setRequestStatus(REQUEST_STATUS.WAITING)

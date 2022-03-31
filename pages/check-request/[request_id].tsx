@@ -5,7 +5,7 @@ const CheckRequest: NextPage = () => {
   const router = useRouter()
   const { request_id } = router.query
 
-  return <>{request_id}</>
+  return <></>
 }
 
 export default CheckRequest
