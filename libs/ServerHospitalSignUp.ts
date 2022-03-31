@@ -5,7 +5,7 @@ import {
   AuthenticateResponse,
   HospitalSignUpReqestData,
 } from '@typedef/authenticate'
-import getPlaceNameByPlaceID from '@libs/getPlaceName'
+import getPlaceNameByPlaceID from '@libs/googleMapsAPI'
 import { HOSPITAL_DASHBOARD_URL } from './constants'
 
 const conn = sql.createConnection(process.env.MY_SQL_URI || '').promise()
@@ -20,7 +20,9 @@ const HospitalSignup = async (
 ) => {
   const { email, password, type, hospital_placeid } = req.body
   try {
-    let hospital_name = await getPlaceNameByPlaceID(hospital_placeid)
+    let { geometry, name: hospital_name } = await getPlaceNameByPlaceID(
+      hospital_placeid
+    )
     if (!hospital_name) throw new Error('Please provide a valid hospital name')
 
     // ADD ACCOUNT
@@ -40,8 +42,14 @@ const HospitalSignup = async (
 
     // SET HOSPITAL DATA
     await conn.execute(
-      'INSERT into HOSPITALS(place_id, name, id) VALUES(?,?,?);',
-      [hospital_placeid, hospital_name, accountInfo.id]
+      'INSERT into HOSPITALS(place_id, name, id, loc_lat, loc_lng) VALUES(?,?,?,?,?);',
+      [
+        hospital_placeid,
+        hospital_name,
+        accountInfo.id,
+        geometry?.location.lat,
+        geometry?.location.lng,
+      ]
     )
 
     // SET ACCOUNT AUTHORIZATION COOKIE

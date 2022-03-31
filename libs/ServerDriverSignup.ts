@@ -5,7 +5,6 @@ import {
   AuthenticateResponse,
   DriverSignUpReqestData,
 } from '@typedef/authenticate'
-import getPlaceNameByPlaceID from '@libs/getPlaceName'
 
 const conn = sql.createConnection(process.env.MY_SQL_URI || '').promise()
 

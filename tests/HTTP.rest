@@ -1,3 +1,4 @@
+# FOR SIGNUP
 POST http://localhost:3000/api/signup
 Accept: application/json
 Content-Type: application/json
@@ -10,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-
+# FOR SIGNIN
 POST http://localhost:3000/api/signin
 Accept: application/json
 Content-Type: application/json
@@ -21,5 +22,23 @@ Content-Type: application/json
 }
 
 ###
+# NOT NEEDED 
+POST http://localhost:3000/api/nearestHospital
+Accept: application/json
+Content-Type: application/json
 
-GET http://localhost:3000/hospital/admin/dashboard
+{
+ "loc_lat":  18.6061181,
+ "loc_lng": 73.8066048
+}
+
+###
+# GET REQUEST
+POST http://localhost:3000/api/generate-requests
+Accept: application/json
+Content-Type: application/json
+
+{
+ "loc_lat":  18.6061181,
+ "loc_lng": 73.8066048
+}

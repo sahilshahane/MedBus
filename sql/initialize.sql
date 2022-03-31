@@ -8,7 +8,9 @@ CREATE TABLE ACCOUNTS (
 CREATE TABLE HOSPITALS (
  id INT NOT NULL UNIQUE REFERENCES ACCOUNTS(id), 
  name TEXT NOT NULL, 
- place_id TEXT NOT NULL
+ place_id TEXT NOT NULL,
+ loc_lat DOUBLE NOT NULL,
+ loc_lng DOUBLE NOT NULL
 );
 
 CREATE TABLE DRIVERS (
@@ -16,16 +18,19 @@ CREATE TABLE DRIVERS (
  hospital_id INT NOT NULL REFERENCES HOSPITALS(id),
  name TEXT NOT NULL, 
  phone CHAR(10) NOT NULL UNIQUE,
- location_lat DOUBLE,
- location_lng DOUBLE
+ loc_lat DOUBLE,
+ loc_lng DOUBLE
 );
 
 CREATE TABLE REQUEST_STATUS (
- id INT AUTO_INCREMENT PRIMARY KEY,
  hospital_id INT NOT NULL REFERENCES HOSPITALS(id),
  driver_id INT REFERENCES DRIVERS(id),
  status ENUM("pending","approved","arriving","returning","hospitalized"),
- brought_by ENUM("helping_person","driver") NOT NULL
+ brought_by ENUM("helping_person","driver") NOT NULL,
+ location_lat DOUBLE NOT NULL,
+ location_lng DOUBLE NOT NULL,
+ req_id VARCHAR(20) NOT NULL ,
+ dev_id VARCHAR(20) NOT NULL
 );
 
 -- CREATE TABLE PATIENT(

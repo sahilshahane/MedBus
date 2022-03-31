@@ -7,6 +7,10 @@ import { Box } from '@chakra-ui/layout'
 const LocationCheck: NextPage = () => {
   const [coords, permission] = useStaticLocation()
 
+  useEffect(() => {
+    console.log('Location Coordinates : ', coords)
+  }, [coords])
+
   return (
     <>
       {permission == PermissionType.ASKING && (

@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createJWT, setCookie, verifyJWT } from '@libs/JWTVerification'
-import { nanoid } from 'nanoid'
-import sql, { QueryError } from 'mysql2'
-import axios from 'axios'
+import { setCookie } from '@libs/JWTVerification'
+import sql from 'mysql2'
 import { AuthenticateResponse, SignInRequestData } from '@typedef/authenticate'
 import { HOSPITAL_DASHBOARD_URL } from '@libs/constants'
 

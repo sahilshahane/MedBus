@@ -4,7 +4,7 @@ import Header from '@components/Header'
 import { Flex } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/button'
 import { BiSearchAlt as SearchIcon } from 'react-icons/bi'
-
+import Link from 'next/link'
 const FindBtn = () => {
   return (
     <Button
@@ -12,7 +12,7 @@ const FindBtn = () => {
       colorScheme='red'
       rightIcon={<SearchIcon size='1.5em' />}
     >
-      Find Nearest Hospital
+      <Link href='/initiate-request'>Find Nearest Hospital</Link>
     </Button>
   )
 }

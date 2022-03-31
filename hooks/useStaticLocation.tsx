@@ -31,7 +31,7 @@ const getPosition = () => {
   })
 }
 
-interface Coordinates {
+export interface Coordinates {
   lat: number
   lng: number
 }
@@ -63,6 +63,8 @@ function useLocation() {
         })
         .then(() => setPermission(PermissionType.GRANTED))
         .catch((error) => {
+          alert(error)
+          console.error(error)
           // alert("Please Grant Location access")
           setPermission(PermissionType.DENIED)
         })
