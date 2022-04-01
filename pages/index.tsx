@@ -7,13 +7,15 @@ import { BiSearchAlt as SearchIcon } from 'react-icons/bi'
 import Link from 'next/link'
 const FindBtn = () => {
   return (
-    <Button
-      variant='outline'
-      colorScheme='red'
-      rightIcon={<SearchIcon size='1.5em' />}
-    >
-      <Link href='/initiate-request'>Find Nearest Hospital</Link>
-    </Button>
+    <Link href='/initiate-request' passHref>
+      <Button
+        variant='outline'
+        colorScheme='red'
+        rightIcon={<SearchIcon size='1.5em' />}
+      >
+        Find Nearest Hospital
+      </Button>
+    </Link>
   )
 }
 

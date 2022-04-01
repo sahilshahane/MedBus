@@ -11,13 +11,15 @@ interface HeaderProps {
 
 const HospitalBtn: FC = () => {
   return (
-    <Button
-      rightIcon={<BsArrowUpRightCircle size='1.1rem' />}
-      colorScheme='red'
-      variant='outline'
-    >
-      <Link href='/hospital/admin'>Hospital</Link>
-    </Button>
+    <Link href='/hospital/admin/dashboard' passHref>
+      <Button
+        rightIcon={<BsArrowUpRightCircle size='1.1rem' />}
+        colorScheme='red'
+        variant='outline'
+      >
+        Hospital
+      </Button>
+    </Link>
   )
 }
 

@@ -1350,10 +1350,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/googlemaps@npm:^3.43.3":
-  version: 3.43.3
-  resolution: "@types/googlemaps@npm:3.43.3"
-  checksum: e08a1fd0c591812359be79f1f5952758a45e2967e117a444c5494eacb03588231cbfeebec0e349063cb2c1dba99226a26378578a6d7a5ea4dab08169e11be77d
+"@types/google.maps@npm:^3.48.3":
+  version: 3.48.3
+  resolution: "@types/google.maps@npm:3.48.3"
+  checksum: d8137bb10524982499e6d049b68a951ab410a12494920016c4bee742d4c37af38e1cd4cfd9c9a2b47d232f99f03680fd36ef42eb995813b83fabb0f044f2ca5a
   languageName: node
   linkType: hard
 
@@ -3279,7 +3279,7 @@ __metadata:
     "@googlemaps/google-maps-services-js": ^3.3.12
     "@types/cookie": ^0.4.1
     "@types/google-map-react": ^2.1.4
-    "@types/googlemaps": ^3.43.3
+    "@types/google.maps": ^3.48.3
     "@types/jsonwebtoken": ^8.5.8
     "@types/node": 17.0.17
     "@types/react": 17.0.39
