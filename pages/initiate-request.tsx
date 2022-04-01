@@ -5,39 +5,31 @@ import Map from '@components/Map'
 import { Box } from '@chakra-ui/layout'
 import useInitiateRequest, { REQUEST_STATUS } from '@hooks/useInitiateRequest'
 
-const Redirect = (REQUEST_ID: string, delay = 3000) => {
-  const SITE_NAME = location.href.substring(0, location.href.indexOf('/', 10))
+const Redirect = (delay = 3000) => {
+  const SITE_NAME = location.href.substring(0, location.href.indexOf('/', 9))
 
-  setTimeout(
-    () => window.location.replace(SITE_NAME + '/check-request/' + REQUEST_ID),
-    delay
-  )
+  setTimeout(() => window.location.replace(SITE_NAME + '/check-request'), delay)
 }
 
 const InitiateRequest: NextPage = () => {
-  const [requestStatus, reqest_RESPONSE] = useInitiateRequest()
+  const [requestStatus, locationPermission] = useInitiateRequest()
 
   useEffect(() => {
     switch (requestStatus) {
       case REQUEST_STATUS.SUCCESS:
-        Redirect(reqest_RESPONSE.REQUEST_ID, 3000)
-        break
-      case REQUEST_STATUS.PREVIOUS_REQUEST_EXISTS:
-        Redirect(reqest_RESPONSE.REQUEST_ID, 0)
+        Redirect(3000)
         break
     }
   }, [requestStatus])
 
   return (
     <>
-      {requestStatus === REQUEST_STATUS.CHECKING_PREVIOUS_REQUEST && (
-        <Box>Checking for previous requests made</Box>
+      {locationPermission === PermissionType.ASKING && (
+        <Box>Please Press Allow if location dialog box appears</Box>
       )}
 
-      {requestStatus === REQUEST_STATUS.PREVIOUS_REQUEST_EXISTS && (
-        <Box>
-          Previous Request has been made, Redirecting to Request Status page
-        </Box>
+      {locationPermission === PermissionType.DENIED && (
+        <Box>Please Grant Location Permission (try reloading page)</Box>
       )}
 
       {requestStatus === REQUEST_STATUS.INITIATING && (

@@ -7,7 +7,7 @@ export type NearestHospitalResponseData = Array<{
   hospital_placeid: string
   hos_loc_lat: number
   hos_loc_lng: number
-  name: string
+  hos_name: string
   approxDistance: number
   distance: number
   duration: number
@@ -15,5 +15,6 @@ export type NearestHospitalResponseData = Array<{
 }>
 
 export type GenerateRequestResponse = {
-  REQUEST_ID: string
+  success: boolean
+  error?: any
 }

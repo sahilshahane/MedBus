@@ -39,7 +39,7 @@ export default async function handler(
 
     // USER_ID -> results[0].id
     setCookie(res, {
-      uid: results[0].id,
+      uid: accountInfo.id,
     })
 
     const accountType = await getAccountType(accountInfo.id)

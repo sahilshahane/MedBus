@@ -23,13 +23,13 @@ CREATE TABLE DRIVERS (
 );
 
 CREATE TABLE REQUEST_STATUS (
+ id INT AUTO_INCREMENT PRIMARY KEY,
  hospital_id INT NOT NULL REFERENCES HOSPITALS(id),
  driver_id INT REFERENCES DRIVERS(id),
  status ENUM("pending","approved","arriving","returning","hospitalized"),
  brought_by ENUM("helping_person","driver") NOT NULL,
  location_lat DOUBLE NOT NULL,
  location_lng DOUBLE NOT NULL,
- req_id VARCHAR(20) NOT NULL ,
  dev_id VARCHAR(20) NOT NULL
 );
 

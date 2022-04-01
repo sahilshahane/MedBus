@@ -4,11 +4,15 @@ import { USER_TOKEN } from '@libs/constants'
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const token = req.cookies[USER_TOKEN]
+  const user_data = verifyJWT(token)
 
-  if (!token || verifyJWT(token) === null) {
+  if (!token || user_data === null) {
     return NextResponse.redirect(req.nextUrl.origin + '/auth')
   }
-
   const res = NextResponse.next()
+
+  // @ts-expect-error
+  res.headers.set('account_id', user_data.uid)
+
   return res
 }

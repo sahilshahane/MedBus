@@ -88,6 +88,7 @@ const handler = async (
 
     // console.log(sortedHospitals)
 
+    //@ts-expect-error
     res.status(200).json(combinedData)
   } catch (err) {
     res.status(400).json({

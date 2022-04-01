@@ -2,8 +2,23 @@ import { Flex, Box, Text, Heading, HStack } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/image'
 import { Button } from '@chakra-ui/button'
 import { NextPage } from 'next'
+import type { FC } from 'react'
+import Link from 'next/link'
+import { BsArrowUpRightCircle } from 'react-icons/bs'
 interface HeaderProps {
-  options?: { value: string; onClick: () => void }[]
+  options?: { text: string; onClick: () => void }[]
+}
+
+const HospitalBtn: FC = () => {
+  return (
+    <Button
+      rightIcon={<BsArrowUpRightCircle size='1.1rem' />}
+      colorScheme='red'
+      variant='outline'
+    >
+      <Link href='/hospital/admin'>Hospital</Link>
+    </Button>
+  )
 }
 
 const Header: NextPage<HeaderProps> = ({ options }) => {
@@ -26,22 +41,22 @@ const Header: NextPage<HeaderProps> = ({ options }) => {
 
         <Heading fontSize='2xl'>Med Bus</Heading>
       </Flex>
-      {options && (
-        <Flex>
-          <HStack>
-            {options.map(({ value, onClick }) => (
+      <Flex>
+        <HStack>
+          <HospitalBtn />
+          {options &&
+            options.map(({ text, onClick }) => (
               <Button
-                key={value}
+                key={text}
                 colorScheme='yellow'
                 variant='outline'
                 onClick={onClick}
               >
-                <Text>{value}</Text>
+                <Text>{text}</Text>
               </Button>
             ))}
-          </HStack>
-        </Flex>
-      )}
+        </HStack>
+      </Flex>
     </Flex>
   )
 }

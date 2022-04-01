@@ -1,4 +1,7 @@
-# FOR SIGNUP
+### GET dev_id | For device identification
+POST http://localhost:3000/
+
+### FOR SIGNUP
 POST http://localhost:3000/api/signup
 Accept: application/json
 Content-Type: application/json
@@ -17,12 +20,12 @@ Accept: application/json
 Content-Type: application/json
 
 {
- "email": "sahil@hospital.com",
- "password": "123"
+ "email": "asdasd@gmail.com",
+ "password": "password@123"
 }
 
 ###
-# NOT NEEDED 
+# NOT NEEDED / REMOVED
 POST http://localhost:3000/api/nearestHospital
 Accept: application/json
 Content-Type: application/json
@@ -37,8 +40,20 @@ Content-Type: application/json
 POST http://localhost:3000/api/generate-requests
 Accept: application/json
 Content-Type: application/json
+Cookie: dev_id=asd
 
 {
- "loc_lat":  18.6061181,
+ "loc_lat": 18.6061181,
  "loc_lng": 73.8066048
 }
+
+###
+# [CLIENT] GET STATUS REQUEST BY DEVICE ID  
+POST https://localhost:8080/api/request_status
+Cookie: dev_id=3AQEUlBW30
+
+###
+# [HOSPITAL] GET LIST OF REQUEST MADE TO THAT PARTICULAR HOSPITAL
+POST http://localhost:3000/api/admin/get_request_list
+Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwMSwiaWF0IjoxNjQ4Nzc1NDgyfQ.PkF-QOs13VRL8mwhCSEPnVp_OBirvbN66jIZsCVHm0T_pcs3GTfzaKy3MtGFoMUf;
+
