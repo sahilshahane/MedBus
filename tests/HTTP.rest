@@ -1,46 +1,55 @@
 ### GET dev_id | For device identification
 POST http://localhost:3000/
 
-### FOR SIGNUP
+### ~~~~SIGNUP~~~~
+### FOR [HOSPITAL]
 POST http://localhost:3000/api/signup
 Accept: application/json
 Content-Type: application/json
 
 {
- "email": "sahilw@2hospital.com",
+ "email": "sahil@hospital.com",
  "password": "123",
  "type": "hospital",
- "hospital_placeid":"ChIsJb_iYL-4RdkgRfILoKI4ebYM"
+ "hospital_address":"Lotus Multispeciality Hospital, Pimple Saudagar, Pune"
 }
 
-###
-# FOR SIGNIN
+### FOR [DRIVER]
+POST http://localhost:3000/api/signup
+Accept: application/json
+Content-Type: application/json
+
+{
+ "email": "shruti@driver.com",
+ "password": "123",
+ "type": "driver",
+ "hospital_address":"Lotus Multispeciality Hospital, Pimple Saudagar, Pune",
+ "driver_name": "Shruti Shahane", 
+ "phone" : "9325827763"
+}
+### ~~~~~ SIGN UP END ~~~~~~
+
+
+
+### ~~~~ SIGNIN ~~~~~
+# FOR [HOSPITAL]
 POST http://localhost:3000/api/signin
 Accept: application/json
 Content-Type: application/json
 
 {
- "email": "asdasd@gmail.com",
- "password": "password@123"
+ "email": "sahil@hospital.com",
+ "password": "123"
 }
 
-###
-# NOT NEEDED / REMOVED
-POST http://localhost:3000/api/nearestHospital
-Accept: application/json
-Content-Type: application/json
-
-{
- "loc_lat":  18.6061181,
- "loc_lng": 73.8066048
-}
+### ~~~~ SIGNIN END ~~~~~~
 
 ###
-# GET REQUEST
+# [CLIENT] GET REQUEST
 POST http://localhost:3000/api/generate-requests
 Accept: application/json
 Content-Type: application/json
-Cookie: dev_id=asd
+Cookie: dev_id=3AQEUlBW30
 
 {
  "loc_lat": 18.6061181,
@@ -49,11 +58,23 @@ Cookie: dev_id=asd
 
 ###
 # [CLIENT] GET STATUS REQUEST BY DEVICE ID  
-POST https://localhost:8080/api/request_status
-Cookie: dev_id=3AQEUlBW30
+POST https://localhost:8080/api/check-request-status
 
 ###
-# [HOSPITAL] GET LIST OF REQUEST MADE TO THAT PARTICULAR HOSPITAL
+# [SIGN IN REQUIRED] [HOSPITAL] GET LIST OF REQUEST MADE TO THAT PARTICULAR HOSPITAL
 POST http://localhost:3000/api/admin/get_request_list
-Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwMSwiaWF0IjoxNjQ4Nzc1NDgyfQ.PkF-QOs13VRL8mwhCSEPnVp_OBirvbN66jIZsCVHm0T_pcs3GTfzaKy3MtGFoMUf;
+Accept: application/json
+Content-Type: application/json
+Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTY0ODgzMjk3Nn0.M8sn4v-A9MJWpGqC5qhw7qf6skclaTPAnLgIWmw34rrzvVcT-vCbrqhxvxJStpJm;
 
+
+### [HOSPITAL] APPROVE A PATIENT'S / REQUESTOR's REQUEST
+POST http://localhost:3000/api/admin/approve_request
+Accept: application/json
+Content-Type: application/json
+Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTY0ODgzMjk3Nn0.M8sn4v-A9MJWpGqC5qhw7qf6skclaTPAnLgIWmw34rrzvVcT-vCbrqhxvxJStpJm;
+
+{
+ "req_id" : 1,
+ "dev_id" : "3AQEUlBW30"
+}

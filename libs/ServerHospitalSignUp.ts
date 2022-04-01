@@ -16,14 +16,17 @@ interface NextApiRequestCustom extends NextApiRequest {
 
 const HospitalSignup = async (
   req: NextApiRequestCustom,
-  res: NextApiResponse<AuthenticateResponse>
+  res: NextApiResponse<AuthenticateResponse>,
+  hospital_placeid: string
 ) => {
-  const { email, password, type, hospital_placeid } = req.body
+  const { email, password, type } = req.body
   try {
     let { geometry, name: hospital_name } = await getPlaceNameByPlaceID(
       hospital_placeid
     )
     if (!hospital_name) throw new Error('Please provide a valid hospital name')
+
+    // [TODO] CHECK IF ACCOUNT EXISTS
 
     // ADD ACCOUNT
     await conn.execute(

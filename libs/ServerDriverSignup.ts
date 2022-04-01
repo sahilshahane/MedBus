@@ -5,8 +5,9 @@ import {
   AuthenticateResponse,
   DriverSignUpReqestData,
 } from '@typedef/authenticate'
+import { getSQLConnection } from './server-side'
 
-const conn = sql.createConnection(process.env.MY_SQL_URI || '').promise()
+const conn = getSQLConnection()
 
 class Hospital404 extends Error {
   message = 'Hospital Does not Exists'
@@ -29,12 +30,14 @@ interface NextApiRequestCustom extends NextApiRequest {
 
 const DriverSignUp = async (
   req: NextApiRequestCustom,
-  res: NextApiResponse<AuthenticateResponse>
+  res: NextApiResponse<AuthenticateResponse>,
+  hospital_placeid: string
 ) => {
-  const { email, password, type, hospital_placeid, driver_name, phone } =
-    req.body
+  const { email, password, type, driver_name, phone } = req.body
   try {
     const hospital_id = await getHospitalID(hospital_placeid)
+
+    // [TODO] CHECK IF ACCOUNT EXISTS
 
     // ADD ACCOUNT
     await conn.execute(

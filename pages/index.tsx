@@ -7,7 +7,7 @@ import { BiSearchAlt as SearchIcon } from 'react-icons/bi'
 import Link from 'next/link'
 const FindBtn = () => {
   return (
-    <Link href='/initiate-request' passHref>
+    <Link href='/generate-request' passHref>
       <Button
         variant='outline'
         colorScheme='red'

@@ -1,6 +1,6 @@
 import { verifyJWT } from '@libs/JWTVerification'
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
-import { USER_TOKEN } from '@libs/constants'
+import { USER_TOKEN, ACCOUNT_ID_HEADER } from '@libs/constants'
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const token = req.cookies[USER_TOKEN]
@@ -12,7 +12,7 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const res = NextResponse.next()
 
   // @ts-expect-error
-  res.headers.set('account_id', user_data.uid)
+  res.headers.set(ACCOUNT_ID_HEADER, user_data.uid)
 
   return res
 }

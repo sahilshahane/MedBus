@@ -29,14 +29,14 @@ interface HospitalSignUpReqestData {
   email: string
   password: string
   type: 'hospital'
-  hospital_placeid: string
+  hospital_address: string
 }
 
 interface DriverSignUpReqestData {
   email: string
   password: string
   type: 'driver'
-  hospital_placeid: string
+  hospital_address: string
   driver_name: string
   phone: string
 }

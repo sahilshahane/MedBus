@@ -27,7 +27,7 @@ const handleSubmit =
         email: form['email'].value,
         password: form['password'].value,
         type: form['accountType'].value,
-        hospital_placeid: form['hospital_placeid'].value,
+        hospital_address: form['hospital_address'].value,
       }
 
       data = _data
@@ -36,7 +36,7 @@ const handleSubmit =
         email: form['email'].value,
         password: form['password'].value,
         type: form['accountType'].value,
-        hospital_placeid: form['hospital_placeid'].value,
+        hospital_address: form['hospital_address'].value,
         driver_name: form['driverName'].value,
         phone: form['phone'].value,
       }
@@ -59,6 +59,7 @@ const SignUp: NextPage<SignUpProps> = ({ sendData }) => {
   const formRef = useRef<HTMLFormElement>(null)
   const handleSubmitWrapper = handleSubmit(sendData, setControlEnabled)
   const [accountType, setAccountType] = useState<AccountTypes>('hospital')
+
   return (
     <form onSubmit={handleSubmitWrapper} ref={formRef}>
       <VStack gap={2}>
@@ -86,7 +87,11 @@ const SignUp: NextPage<SignUpProps> = ({ sendData }) => {
           </Select>
         </FormControl>
 
-        <PlacesAutoComplete controlsEnabled={controlsEnabled} />
+        {/* <PlacesAutoComplete controlsEnabled={controlsEnabled} /> */}
+        <FormControl isRequired isDisabled={!controlsEnabled}>
+          <FormLabel htmlFor='hospital_address'>Hospital Address</FormLabel>
+          <Input type='text' id='hospital_address' name='hospital_address' />
+        </FormControl>
 
         {accountType === 'driver' && (
           <>

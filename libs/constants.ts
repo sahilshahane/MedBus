@@ -12,5 +12,6 @@ export const HOSPITAL_DASHBOARD_URL = '/hospital/admin/dashboard'
 export const DEV_ID_COOKIE_NAME = 'dev_id'
 export const MAX_HOSPITAL_ENTRIES = 1
 export const REQ_ID_COOKIE = 'req_id'
-/** MAX RADIUS FOR HOSPITAL (in kms)*/
-export const MAX_HOSPITAL_RADIUS = 20
+/** MAX RADIUS FOR HOSPITAL (in meters)*/
+export const MAX_HOSPITAL_RADIUS = 20_000
+export const ACCOUNT_ID_HEADER = 'account-id'

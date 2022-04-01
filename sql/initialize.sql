@@ -17,20 +17,22 @@ CREATE TABLE DRIVERS (
  id INT NOT NULL UNIQUE REFERENCES ACCOUNTS(id), 
  hospital_id INT NOT NULL REFERENCES HOSPITALS(id),
  name TEXT NOT NULL, 
- phone CHAR(10) NOT NULL UNIQUE,
- loc_lat DOUBLE,
- loc_lng DOUBLE
+ phone CHAR(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE REQUEST_STATUS (
  id INT AUTO_INCREMENT PRIMARY KEY,
- hospital_id INT NOT NULL REFERENCES HOSPITALS(id),
+ hospital_id INT REFERENCES HOSPITALS(id),
  driver_id INT REFERENCES DRIVERS(id),
  status ENUM("pending","approved","arriving","returning","hospitalized"),
  brought_by ENUM("helping_person","driver") NOT NULL,
  location_lat DOUBLE NOT NULL,
  location_lng DOUBLE NOT NULL,
- dev_id VARCHAR(20) NOT NULL
+ dev_id VARCHAR(20) NOT NULL,
+ hospital_duration INT,
+ hospital_distance INT,
+ driver_loc_lat DOUBLE,
+ driver_loc_lng DOUBLE
 );
 
 -- CREATE TABLE PATIENT(

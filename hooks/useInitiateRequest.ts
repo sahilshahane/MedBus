@@ -7,7 +7,7 @@ import {
   GenerateRequestResponse,
 } from '@typedef/googleMaps'
 import useStaticLocation from '@hooks/useStaticLocation'
-import { REQUEST_STATUS_RESPONSE } from 'pages/api/request_status'
+import { REQUEST_STATUS_RESPONSE } from 'pages/api/check-request-status'
 
 export enum REQUEST_STATUS {
   INITIATING,

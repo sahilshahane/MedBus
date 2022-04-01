@@ -2,7 +2,7 @@ import { REQUEST_STATUSES } from '@typedef/authenticate'
 import axios from 'axios'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { REQUEST_STATUS_RESPONSE } from 'pages/api/request_status'
+import { REQUEST_STATUS_RESPONSE } from 'pages/api/check-request-status'
 import { useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/layout'
 
@@ -26,7 +26,7 @@ const useIntervalFetch = (timeout: number) => {
 
     const URL =
       location.href.substring(0, location.href.indexOf('/', 9)) +
-      '/api/request_status'
+      '/api/check-request-status'
 
     const req = (callback: any) => {
       axios
