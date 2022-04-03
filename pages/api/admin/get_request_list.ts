@@ -15,7 +15,6 @@ export interface HRL_Entry {
   dev_id: number
   /** Request ID*/
   req_id: number
-  //
   approxDistance: number
 }
 

@@ -38,7 +38,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
- "email": "sahil@hospital.com",
+ "email": "shruti@driver.com",
  "password": "123"
 }
 
@@ -59,7 +59,7 @@ Cookie: dev_id=3AQEUlBW30
 ###
 # [CLIENT] GET STATUS REQUEST BY DEVICE ID  
 POST https://localhost:8080/api/check-request-status
-
+Cookie: dev_id=3AQEUlBW30;
 ###
 # [SIGN IN REQUIRED] [HOSPITAL] GET LIST OF REQUEST MADE TO THAT PARTICULAR HOSPITAL
 POST http://localhost:3000/api/admin/get_request_list
@@ -77,4 +77,15 @@ Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTY0ODgzMjk
 {
  "req_id" : 1,
  "dev_id" : "3AQEUlBW30"
+}
+
+### [DRIVER] UPDATE DRIVER'S LOCATION
+POST http://localhost:3000/api/admin/update-location/1
+Accept: application/json
+Content-Type: application/json
+Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTY0ODg2ODU0MH0.FQfJ-yEfBHwVtAPKsySX_7KymdcQpYGtrxeRnruuLrkEXh-uN25WdTI6zhCLQO3l;
+
+{
+ "loc_lat" : 18.00012002,
+ "loc_lng": 75.212312
 }

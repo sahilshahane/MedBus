@@ -15,3 +15,4 @@ export const REQ_ID_COOKIE = 'req_id'
 /** MAX RADIUS FOR HOSPITAL (in meters)*/
 export const MAX_HOSPITAL_RADIUS = 20_000
 export const ACCOUNT_ID_HEADER = 'account-id'
+export const DRIVER_LOC_UPDATE_TIME = 3000

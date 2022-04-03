@@ -13,6 +13,6 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   // @ts-expect-error
   res.headers.set(ACCOUNT_ID_HEADER, user_data.uid)
-
+  res.headers.set('origin', req.nextUrl.origin)
   return res
 }

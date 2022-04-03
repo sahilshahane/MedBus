@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { Box } from '@chakra-ui/layout'
 import GoogleMaps from 'google-map-react'
 import type googleMapReact from 'google-map-react'
-import Marker from '@components/MapMarker'
+import Marker from '@components/MapMarkers'
 
 enum ZoomLevel {
   WORLD = 1,
