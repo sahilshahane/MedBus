@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import { REQUEST_STATUS_RESPONSE } from 'pages/api/check-request-status'
 import { useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/layout'
+import Map from '@components/MapVanilla'
+import useHospitalDetails from '@hooks/useHospitalDetails'
+import useRequestDetails from '@hooks/useRequestDetails'
 
 type CUSTOM_REQUEST_STATUS = REQUEST_STATUSES | 'invalid' | 'checking'
 
@@ -14,7 +17,7 @@ interface RequestResponse extends REQUEST_STATUS_RESPONSE {
 }
 
 const useIntervalFetch = (timeout: number) => {
-  const router = useRouter()
+  const [hospitalDetails] = useHospitalDetails()
 
   const [req_data, setReqData] = useState<RequestResponse>({
     status: 'checking',
@@ -24,13 +27,9 @@ const useIntervalFetch = (timeout: number) => {
   useEffect(() => {
     let request_made = 0
 
-    const URL =
-      location.href.substring(0, location.href.indexOf('/', 9)) +
-      '/api/check-request-status'
-
     const req = (callback: any) => {
       axios
-        .post<RequestResponse>(URL)
+        .post<RequestResponse>('/api/check-request-status')
         .then(({ data }) => setReqData(data))
         .catch((err) => {
           console.error(
@@ -62,28 +61,36 @@ const useIntervalFetch = (timeout: number) => {
 }
 
 const CheckRequest: NextPage = () => {
-  const [data] = useIntervalFetch(5000)
-  const { status } = data
+  const [
+    [hospitalDetails],
+    [driverDetails],
+    [patientDetails],
+    [statusDetails],
+  ] = useRequestDetails()
+
+  const status = statusDetails?.status
+
+  if (!status) return <Box>Please Wait...</Box>
+  if (status === 'hospitalized') return <Box>Patient has been hospitalized</Box>
 
   return (
-    <>
-      {status === 'checking' && <Box>Please Wait...</Box>}
-      {status === 'invalid' && <Box>No requests has been made</Box>}
-      {status === 'pending' && <Box>Request is sent to near by hospitals</Box>}
-      {status === 'approved' && (
-        <Box>Request by been approved by ---- Hospital [TODO]</Box>
+    <Box>
+      Status : {status} <br />
+      Patient Coords - {JSON.stringify(patientDetails?.position, null, 2)}
+      <br />
+      Hospital Name - {hospitalDetails?.name} <br />
+      Hospital Coords - {JSON.stringify(hospitalDetails?.position, null, 2)}
+      <br />
+      Driver Coords - {JSON.stringify(driverDetails?.position, null, 2)}
+      <br />
+      {hospitalDetails && patientDetails && driverDetails && (
+        <Map
+          driver_coords={driverDetails?.position}
+          hospital_coords={hospitalDetails?.position}
+          user_coords={patientDetails?.position}
+        />
       )}
-
-      {status === 'arriving' && (
-        <Box>Ambulance has been dispatched, Make sure patient is alive</Box>
-      )}
-
-      {status === 'returning' && (
-        <Box>Patient has been picked up by ambulance</Box>
-      )}
-
-      {status === 'hospitalized' && <Box>Patient has been hospitalized</Box>}
-    </>
+    </Box>
   )
 }
 

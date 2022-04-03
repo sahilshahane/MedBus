@@ -89,3 +89,22 @@ Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTY0ODg2ODU
  "loc_lat" : 18.00012002,
  "loc_lng": 75.212312
 }
+
+### [GET HOSPITAL DETAILS OF A REQUEST]
+POST http://localhost:3000/api/get-hospital-details
+Cookie: dev_id=3AQEUlBW30;
+
+
+### [GET PATIENT DETAILS OF A REQUEST]
+POST http://localhost:3000/api/get-patient-details
+Cookie: dev_id=3AQEUlBW30;
+
+
+### [GET STATUS DETAILS OF A REQUEST]
+POST http://localhost:3000/api/get-status-details
+Cookie: dev_id=3AQEUlBW30;
+
+
+### [GET DRIVER DETAILS OF A REQUEST]
+POST http://localhost:3000/api/get-driver-details
+Cookie: dev_id=3AQEUlBW30;
