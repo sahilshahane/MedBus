@@ -32,13 +32,13 @@ Content-Type: application/json
 
 
 ### ~~~~ SIGNIN ~~~~~
-# FOR [HOSPITAL]
+# FOR [HOSPITAL & DRIVER]
 POST http://localhost:3000/api/signin
 Accept: application/json
 Content-Type: application/json
 
 {
- "email": "shruti@driver.com",
+ "email": "vaidehi@driver.com",
  "password": "123"
 }
 
@@ -78,6 +78,12 @@ Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTY0ODgzMjk
  "req_id" : 1,
  "dev_id" : "3AQEUlBW30"
 }
+
+
+### GET DRIVER's ALLOCATED REQUEST ID
+POST http://localhost:3000/api/admin/update-location
+Cookie: tkn=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTY0OTA5MDI4Nn0.az-S317J5_d6nRmDA9uPwtaphEwfno4Sl76h10rcCNHHwl8ghVnaL3BhJP2ZaLIM;
+
 
 ### [DRIVER] UPDATE DRIVER'S LOCATION
 POST http://localhost:3000/api/admin/update-location/1

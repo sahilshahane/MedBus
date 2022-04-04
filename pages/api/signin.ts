@@ -46,8 +46,14 @@ export default async function handler(
 
     res.status(200).json({
       title: 'Signin successfull',
-      message: accountType === 'hospital' ? 'Redirecting to dashboard' : '',
-      redirect: accountType === 'hospital' ? HOSPITAL_DASHBOARD_URL : '',
+      message:
+        accountType === 'hospital'
+          ? 'Redirecting to dashboard'
+          : 'Redirecting to dashboard',
+      redirect:
+        accountType === 'hospital'
+          ? HOSPITAL_DASHBOARD_URL
+          : '/update-location',
       type: accountType,
     })
   } catch (_error) {

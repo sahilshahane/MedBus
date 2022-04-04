@@ -8,56 +8,30 @@ import { Box } from '@chakra-ui/layout'
 import Map from '@components/MapVanilla'
 import useHospitalDetails from '@hooks/useHospitalDetails'
 import useRequestDetails from '@hooks/useRequestDetails'
+import { DRIVER_LOCATION_UPDATE_INTERVAL } from '@libs/client_constants'
 
-type CUSTOM_REQUEST_STATUS = REQUEST_STATUSES | 'invalid' | 'checking'
-
-// @ts-expect-error
-interface RequestResponse extends REQUEST_STATUS_RESPONSE {
-  status?: CUSTOM_REQUEST_STATUS
-}
-
-const useIntervalFetch = (timeout: number) => {
-  const [hospitalDetails] = useHospitalDetails()
-
-  const [req_data, setReqData] = useState<RequestResponse>({
-    status: 'checking',
-  })
-  const [intervalID, setIntervalID] = useState<any>()
+const useGetDetails = () => {
+  const [
+    [hospitalDetails],
+    [driverDetails, refreshDriverDetails],
+    [patientDetails],
+    [statusDetails, refreshStatusDetails],
+  ] = useRequestDetails()
 
   useEffect(() => {
-    let request_made = 0
-
-    const req = (callback: any) => {
-      axios
-        .post<RequestResponse>('/api/check-request-status')
-        .then(({ data }) => setReqData(data))
-        .catch((err) => {
-          console.error(
-            'Something went wrong while checking request status',
-            err
-          )
-        })
-        .finally(() => {
-          console.log('Request Made ', ++request_made)
-          callback && callback()
-        })
-    }
-
-    req(() => {
-      let tempID = setInterval(req, timeout)
-      setIntervalID(tempID)
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setInterval(() => {
+      // console.log(driverDetails)
+      refreshStatusDetails()
+      refreshDriverDetails()
+    }, DRIVER_LOCATION_UPDATE_INTERVAL)
   }, [])
-  const StopRequestUpdates = () => clearInterval(intervalID)
 
-  useEffect(() => {
-    if (req_data.status === 'hospitalized') StopRequestUpdates()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [req_data])
-
-  return [req_data] as const
+  return [
+    [hospitalDetails],
+    [driverDetails, refreshDriverDetails],
+    [patientDetails],
+    [statusDetails, refreshStatusDetails],
+  ] as const
 }
 
 const CheckRequest: NextPage = () => {
@@ -66,12 +40,18 @@ const CheckRequest: NextPage = () => {
     [driverDetails],
     [patientDetails],
     [statusDetails],
-  ] = useRequestDetails()
+  ] = useGetDetails()
 
   const status = statusDetails?.status
 
   if (!status) return <Box>Please Wait...</Box>
   if (status === 'hospitalized') return <Box>Patient has been hospitalized</Box>
+
+  const getLinePath = () => {
+    if (status === 'returning') return 'hospital-driver'
+
+    return 'driver-patient'
+  }
 
   return (
     <Box>
@@ -85,6 +65,7 @@ const CheckRequest: NextPage = () => {
       <br />
       {hospitalDetails && patientDetails && driverDetails && (
         <Map
+          line_between={getLinePath()}
           driver_coords={driverDetails?.position}
           hospital_coords={hospitalDetails?.position}
           user_coords={patientDetails?.position}
