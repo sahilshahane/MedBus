@@ -1,17 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '@libs/JWTVerification'
-import sql from 'mysql2'
+import sql, { RowDataPacket } from 'mysql2'
 import { AuthenticateResponse, SignInRequestData } from '@typedef/authenticate'
-import { HOSPITAL_DASHBOARD_URL } from '@libs/constants'
+import { DRIVER_DASHBOARD_URL, HOSPITAL_DASHBOARD_URL } from '@libs/constants'
 
 const conn = sql.createConnection(process.env.MY_SQL_URI || '').promise()
 
-const getAccountType = async (account_id: string) => {
-  const [result] = (await conn.query('SELECT type from ACCOUNTS WHERE id = ?', [
-    account_id,
-  ])) as any
+type AccountTypes = 'hospital' | 'driver'
 
-  return result[0].type
+interface AccountTypeQuery extends RowDataPacket {
+  type: AccountTypes
+}
+
+const getAccountType = async (account_id: string) => {
+  const [[result]] = await conn.query<AccountTypeQuery[]>(
+    'SELECT type from ACCOUNTS WHERE id = ?',
+    [account_id]
+  )
+
+  return result.type
 }
 
 class IncorrectCredentials {}
@@ -37,12 +44,13 @@ export default async function handler(
 
     const accountInfo = results[0]
 
+    const accountType = await getAccountType(accountInfo.id)
+
     // USER_ID -> results[0].id
     setCookie(res, {
       uid: accountInfo.id,
+      accountType,
     })
-
-    const accountType = await getAccountType(accountInfo.id)
 
     res.status(200).json({
       title: 'Signin successfull',
@@ -53,7 +61,7 @@ export default async function handler(
       redirect:
         accountType === 'hospital'
           ? HOSPITAL_DASHBOARD_URL
-          : '/update-location',
+          : DRIVER_DASHBOARD_URL,
       type: accountType,
     })
   } catch (_error) {

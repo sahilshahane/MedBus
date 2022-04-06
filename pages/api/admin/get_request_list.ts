@@ -84,7 +84,7 @@ const handler = async (
   // )
 
   const [requests] = await conn.query<DetailsFetchQuery[]>(
-    'SELECT id AS req_id, location_lat, location_lng, status, driver_id, dev_id FROM REQUEST_STATUS',
+    'SELECT id AS req_id, location_lat, location_lng, status, driver_id, dev_id FROM REQUEST_STATUS WHERE hospital_id = ? OR hospital_id IS NULL',
     [hospital_id]
   )
 

@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '@libs/JWTVerification'
-import sql from 'mysql2'
+import sql, { RowDataPacket } from 'mysql2'
 import {
+  AccountTypes,
   AuthenticateResponse,
   DriverSignUpReqestData,
 } from '@typedef/authenticate'
 import { getSQLConnection } from './server-side'
+import { DRIVER_DASHBOARD_URL } from './constants'
 
 const conn = getSQLConnection()
 
@@ -28,6 +30,11 @@ interface NextApiRequestCustom extends NextApiRequest {
   body: DriverSignUpReqestData
 }
 
+interface AccountQuery extends RowDataPacket {
+  type: AccountTypes
+  id: number
+}
+
 const DriverSignUp = async (
   req: NextApiRequestCustom,
   res: NextApiResponse<AuthenticateResponse>,
@@ -46,12 +53,10 @@ const DriverSignUp = async (
     )
 
     // GET ACCOUNT ID
-    const [results] = (await conn.query(
-      'SELECT id FROM ACCOUNTS WHERE email = ?',
+    const [[accountInfo]] = await conn.query<AccountQuery[]>(
+      'SELECT id, type FROM ACCOUNTS WHERE email = ?',
       [email]
-    )) as any
-
-    const accountInfo = results[0]
+    )
 
     // SET DRIVER DATA
     await conn.execute(
@@ -61,12 +66,14 @@ const DriverSignUp = async (
 
     // USER_ID -> results[0].id
     setCookie(res, {
-      uid: accountInfo.id,
+      uid: String(accountInfo.id),
+      accountType: accountInfo.type,
     })
 
     res.status(200).json({
-      message: '',
+      message: 'Redirecting to dashboard',
       title: 'Registered successfully',
+      redirect: DRIVER_DASHBOARD_URL,
     })
   } catch (_error) {
     let code = 400

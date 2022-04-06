@@ -21,7 +21,8 @@
       "@hooks/*": ["./hooks/*"],
       "@contexts/*": ["./contexts/*"],
       "@typedef/*": ["./typedefs/*"],
-      "@libs/*": ["./libs/*"]
+      "@libs/*": ["./libs/*"],
+      "@middlewares/*": ["./middlewares/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

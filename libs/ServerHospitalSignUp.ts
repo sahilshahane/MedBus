@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { setCookie } from '@libs/JWTVerification'
-import sql from 'mysql2'
+import sql, { RowDataPacket } from 'mysql2'
 import {
+  AccountTypes,
   AuthenticateResponse,
   HospitalSignUpReqestData,
 } from '@typedef/authenticate'
@@ -12,6 +13,11 @@ const conn = sql.createConnection(process.env.MY_SQL_URI || '').promise()
 
 interface NextApiRequestCustom extends NextApiRequest {
   body: HospitalSignUpReqestData
+}
+
+interface AccountQuery extends RowDataPacket {
+  type: AccountTypes
+  id: number
 }
 
 const HospitalSignup = async (
@@ -35,13 +41,10 @@ const HospitalSignup = async (
     )
 
     // GET ACCOUNT ID
-    const [results] = (await conn.query(
-      'SELECT id FROM ACCOUNTS WHERE email = ?',
+    const [[accountInfo]] = await conn.query<AccountQuery[]>(
+      'SELECT id, type FROM ACCOUNTS WHERE email = ?',
       [email]
-    )) as any
-
-    // FETCHED ACCOUNT INFO
-    const accountInfo = results[0]
+    )
 
     // SET HOSPITAL DATA
     await conn.execute(
@@ -57,7 +60,8 @@ const HospitalSignup = async (
 
     // SET ACCOUNT AUTHORIZATION COOKIE
     setCookie(res, {
-      uid: accountInfo.id,
+      uid: String(accountInfo.id),
+      accountType: accountInfo.type,
     })
 
     res.status(200).json({
