@@ -53,8 +53,8 @@ const NotifyDriver = async (
     'SELECT phone, name FROM DRIVERS WHERE id IN (SELECT driver_id AS id FROM REQUEST_STATUS WHERE id = ?) LIMIT 1;',
     [req_id]
   )
-  const SITE_URL = res.getHeader('origin') + '/update-location/' + req_id
-  const msg = `A patient has been allocated to you, Please Visit ${SITE_URL} link to track the ambulance`
+  const SITE_URL = res.getHeader('origin') + '/update-location'
+  const msg = `A patient has been allocated to you, Please Visit ${SITE_URL}`
 
   SMS(driverDetail.phone, msg)
 }
