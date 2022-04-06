@@ -20,7 +20,7 @@ export const SMS = async (phone_no: number, text: string) => {
 
   const client = getTwilioClient()
 
-  client.messages
+  await client.messages
     .create({
       body: text,
       from: process.env.TWILIO_PHONE_NO,

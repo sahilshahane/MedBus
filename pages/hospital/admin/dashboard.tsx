@@ -18,6 +18,7 @@ const useRequest = (delay = 1000, data: any = {}) => {
       .post<HRL_Response>('/api/admin/get_request_list', data)
       .then(({ data }) => {
         setFailed(false)
+        console.log('data = ', data)
         setResponse(data)
       })
       .catch(() => {

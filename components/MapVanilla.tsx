@@ -77,7 +77,7 @@ const Map: FC<MapProps> = (props) => {
           strokeColor: 'red',
         })
       )
-  }, [driver_marker, driver_coords])
+  }, [driver_marker, driver_coords, line_between])
 
   return (
     <>

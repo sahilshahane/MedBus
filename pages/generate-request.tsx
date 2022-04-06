@@ -17,7 +17,7 @@ const InitiateRequest: NextPage = () => {
   useEffect(() => {
     switch (requestStatus) {
       case REQUEST_STATUS.SUCCESS:
-        Redirect(3000)
+        Redirect(1000)
         break
     }
   }, [requestStatus])
@@ -29,7 +29,10 @@ const InitiateRequest: NextPage = () => {
       )}
 
       {locationPermission === PermissionType.DENIED && (
-        <Box>Please Grant Location Permission (try reloading page)</Box>
+        <Box>
+          Please Grant Location Permission (try reloading page with location
+          enabled)
+        </Box>
       )}
 
       {requestStatus === REQUEST_STATUS.INITIATING && (
