@@ -25,11 +25,14 @@ const HospitalSignup = async (
   res: NextApiResponse<AuthenticateResponse>,
   hospital_placeid: string
 ) => {
-  const { email, password, type } = req.body
+  const { email, password, type, phone } = req.body
   try {
-    let { geometry, name: hospital_name } = await getPlaceNameByPlaceID(
-      hospital_placeid
-    )
+    let {
+      geometry,
+      name: hospital_name,
+      formatted_address,
+    } = await getPlaceNameByPlaceID(hospital_placeid)
+
     if (!hospital_name) throw new Error('Please provide a valid hospital name')
 
     // [TODO] CHECK IF ACCOUNT EXISTS
@@ -48,13 +51,15 @@ const HospitalSignup = async (
 
     // SET HOSPITAL DATA
     await conn.execute(
-      'INSERT into HOSPITALS(place_id, name, id, loc_lat, loc_lng) VALUES(?,?,?,?,?);',
+      'INSERT into HOSPITALS(place_id, name, id, loc_lat, loc_lng, phone, address) VALUES(?,?,?,?,?,?,?);',
       [
         hospital_placeid,
         hospital_name,
         accountInfo.id,
         geometry?.location.lat,
         geometry?.location.lng,
+        phone,
+        formatted_address,
       ]
     )
 
@@ -70,12 +75,13 @@ const HospitalSignup = async (
       redirect: HOSPITAL_DASHBOARD_URL,
     })
   } catch (_error) {
+    console.error(_error)
+
     let code = 400
     let message, title
     const error: any = _error
 
     if (error instanceof Object) {
-      console.error(error.message)
       message = error.message
       if (error.code === 'ER_DUP_ENTRY') {
         code = 409

@@ -6,7 +6,7 @@ const getPlaceData = async (place_id: string) => {
   const res = await gmap.placeDetails({
     params: {
       place_id,
-      fields: ['name', 'geometry'],
+      fields: ['name', 'geometry', 'formatted_address'],
       key: process.env.SERVER_GOOGLE_MAPS_KEY as string,
     },
   })

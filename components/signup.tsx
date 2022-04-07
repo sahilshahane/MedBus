@@ -28,6 +28,7 @@ const handleSubmit =
         password: form['password'].value,
         type: form['accountType'].value,
         hospital_address: form['hospital_address'].value,
+        phone: form['phone'].value,
       }
 
       data = _data
@@ -104,17 +105,17 @@ const SignUp: NextPage<SignUpProps> = ({ sendData }) => {
                 maxLength={50}
               />
             </FormControl>
-
-            <FormControl isDisabled={!controlsEnabled} isRequired>
-              <FormLabel htmlFor='phone'>Phone Number</FormLabel>
-
-              <InputGroup>
-                <InputLeftAddon>+91</InputLeftAddon>
-                <Input type='tel' id='phone' name='phone' maxLength={10} />
-              </InputGroup>
-            </FormControl>
           </>
         )}
+
+        <FormControl isDisabled={!controlsEnabled} isRequired>
+          <FormLabel htmlFor='phone'>Phone Number</FormLabel>
+
+          <InputGroup>
+            <InputLeftAddon>+91</InputLeftAddon>
+            <Input type='tel' id='phone' name='phone' maxLength={10} />
+          </InputGroup>
+        </FormControl>
 
         <FormControl>
           <Input

@@ -65,6 +65,7 @@ export default async function handler(
       type: accountType,
     })
   } catch (_error) {
+    console.error(_error)
     let code = 400
     let message, title
     const error: any = _error

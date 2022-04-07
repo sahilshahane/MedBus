@@ -30,6 +30,7 @@ interface HospitalSignUpReqestData {
   password: string
   type: 'hospital'
   hospital_address: string
+  phone: string
 }
 
 interface DriverSignUpReqestData {

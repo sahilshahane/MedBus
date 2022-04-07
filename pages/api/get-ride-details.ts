@@ -29,6 +29,11 @@ interface QueryResult extends RowDataPacket {
   hospital_id: number
 }
 
+interface HospitalQueryResult extends RowDataPacket {
+  hos_lat: number
+  hos_lng: number
+}
+
 const conn = getSQLConnection()
 const gMap = new Client({})
 
@@ -66,11 +71,11 @@ const handler = async (
   )
     return res.status(200).json({
       time: {
-        text: '',
+        text: '[not available]',
         value: 0,
       },
       distance: {
-        text: '',
+        text: '[not available]',
         value: 0,
       },
     })
@@ -94,11 +99,22 @@ const handler = async (
     })
   }
 
+  let destination_coords = [location_lat, location_lng]
+
+  if (status === 'returning') {
+    const [[hospital_details]] = await conn.query<HospitalQueryResult[]>(
+      'SELECT loc_lat AS hos_lat, loc_lng AS hos_lng FROM HOSPITALS WHERE id = ? LIMIT 1',
+      [hospital_id]
+    )
+
+    destination_coords = [hospital_details.hos_lat, hospital_details.hos_lng]
+  }
+
   const gMapRes = await gMap.distancematrix({
     params: {
       key: process.env.SERVER_GOOGLE_MAPS_KEY as string,
       client_id: 'server',
-      destinations: [[location_lat, location_lng]] as LatLng[],
+      destinations: [destination_coords] as LatLng[],
       origins: [[driver_loc_lat, driver_loc_lng]] as LatLng[],
     },
   })

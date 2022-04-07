@@ -76,12 +76,12 @@ const DriverSignUp = async (
       redirect: DRIVER_DASHBOARD_URL,
     })
   } catch (_error) {
+    console.error(_error)
     let code = 400
     let message, title
     const error: any = _error
 
     if (error instanceof Object) {
-      console.error(error.message)
       message = error.message
       if (error.code === 'ER_DUP_ENTRY') {
         code = 409

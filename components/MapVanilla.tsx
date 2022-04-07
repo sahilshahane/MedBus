@@ -5,7 +5,12 @@ import { Box } from '@chakra-ui/layout'
 import { useGetMarkers } from '@hooks/useMarker'
 
 const renderer = (status: Status) => {
-  return <Box>Map API : {status}</Box>
+  if (status === Status.FAILURE)
+    return <Box>Failed to load map&apos;s library</Box>
+
+  if (status === Status.LOADING) return <Box>Loading map&apos;s library</Box>
+
+  return <></>
 }
 
 const MapWrapper: FC<MapProps> = (props) => {
