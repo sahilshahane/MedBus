@@ -71,11 +71,11 @@ const handler = async (
   )
     return res.status(200).json({
       time: {
-        text: '[not available]',
+        text: '-',
         value: 0,
       },
       distance: {
-        text: '[not available]',
+        text: '-',
         value: 0,
       },
     })

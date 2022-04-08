@@ -3,6 +3,14 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { Coordinates } from '@hooks/useStaticLocation'
 import { Box } from '@chakra-ui/layout'
 import { useGetMarkers } from '@hooks/useMarker'
+import { STATUS_DETAILS_RESPONSE } from 'pages/api/get-status-details'
+
+interface MapProps extends google.maps.MapOptions {
+  hospital_coords: Coordinates
+  user_coords: Coordinates
+  driver_coords: Coordinates
+  status: STATUS_DETAILS_RESPONSE
+}
 
 const renderer = (status: Status) => {
   if (status === Status.FAILURE)
@@ -23,16 +31,15 @@ const MapWrapper: FC<MapProps> = (props) => {
       render={renderer}
       callback={(status) => console.log(status)}
     >
-      <Map {...props} center={driver_coords} zoom={13} disableDefaultUI />
+      <Map
+        {...props}
+        mapId={'d0fb69b34846781a'}
+        center={driver_coords}
+        zoom={13}
+        disableDefaultUI
+      />
     </Wrapper>
   )
-}
-
-interface MapProps extends google.maps.MapOptions {
-  hospital_coords: Coordinates
-  user_coords: Coordinates
-  driver_coords: Coordinates
-  line_between: 'hospital-driver' | 'driver-patient'
 }
 
 const Map: FC<MapProps> = (props) => {
@@ -40,14 +47,14 @@ const Map: FC<MapProps> = (props) => {
   const [map, setMap] = useState<google.maps.Map>()
   const [linePath, setLinePath] = useState<google.maps.Polyline>()
 
-  const { user_coords, hospital_coords, driver_coords, line_between } = props
+  const { user_coords, hospital_coords, driver_coords, status } = props
 
   const [patient_marker, driver_marker] = useGetMarkers(
     map,
     user_coords,
     driver_coords,
     hospital_coords,
-    line_between
+    status
   )
 
   useEffect(() => {
@@ -67,14 +74,14 @@ const Map: FC<MapProps> = (props) => {
 
     if (!map || !patient_marker || !driver_marker) return
 
-    if (line_between === 'driver-patient')
+    if (status.status === 'arriving')
       setLinePath(
         new google.maps.Polyline({
           path: [user_coords, driver_coords],
           map,
         })
       )
-    else
+    else if (status.status === 'returning')
       setLinePath(
         new google.maps.Polyline({
           path: [hospital_coords, driver_coords],
@@ -82,11 +89,11 @@ const Map: FC<MapProps> = (props) => {
           strokeColor: 'red',
         })
       )
-  }, [driver_marker, driver_coords, line_between])
+  }, [driver_marker, driver_coords, status])
 
   return (
     <>
-      <Box h='50vh' w='50vw' ref={ref} id='map' />
+      <Box ref={ref} id='map' />
     </>
   )
 }

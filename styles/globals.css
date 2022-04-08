@@ -15,6 +15,36 @@ a {
   box-sizing: border-box;
 }
 
-.SuggestionBlockItem:hover {
-  background-color: aqua;
+#req_status {
+  flex-flow: column nowrap;
+  height: 100vh;
+  width: 100vw;
+}
+
+#map {
+  height: 55vh;
+  width: 100vw;
+  border-bottom: 1px black solid;
+}
+
+#data_component {
+  align-items: center;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  #req_status {
+    flex-flow: row nowrap;
+  }
+  #map {
+    height: 100vh;
+    width: 50vw;
+    border-right: 1px black solid;
+    border-bottom: none;
+  }
+  #data_component {
+    width: 50vw;
+  }
 }

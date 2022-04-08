@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/layout'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { Button } from '@chakra-ui/button'
 import { Tag } from '@chakra-ui/tag'
 import axios from 'axios'
@@ -52,8 +52,8 @@ const AvailablityTag: FC<{ res?: update_loc_res }> = ({ res }) => {
 
   const getStatus = () => {
     if (!res) return 'Checking'
-    if (res.req_id) return 'Available'
-    return 'Not Available'
+    if (res.req_id) return 'YES'
+    return 'No'
   }
 
   return (
@@ -71,12 +71,31 @@ const UpdateLocation: NextPage = () => {
 
   return (
     <>
-      <Box>
-        <AvailablityTag res={res} />
-        <br />
-        <Button onClick={START_UPDATING}>START RIDE</Button>
-        <br />
-      </Box>
+      <Flex
+        w='100vw'
+        h='100vh'
+        justifyContent={'center'}
+        alignItems='center'
+        flexFlow={'column nowrap'}
+        gap='1rem'
+      >
+        <Flex
+          justifyContent={'center'}
+          alignItems='center'
+          flexFlow={'row nowrap'}
+          gap='1rem'
+        >
+          <Text>Patient Allocated : </Text>
+          <AvailablityTag res={res} />
+        </Flex>
+        <Button
+          colorScheme={res?.req_id ? 'green' : 'red'}
+          onClick={START_UPDATING}
+          disabled={!res?.req_id}
+        >
+          START RIDE
+        </Button>
+      </Flex>
     </>
   )
 }
