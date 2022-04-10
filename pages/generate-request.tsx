@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
-import { useState, useEffect, FC } from 'react'
-import useStaticLocation, { PermissionType } from '@hooks/useStaticLocation'
-import Map from '@components/Map'
-import { Box } from '@chakra-ui/layout'
+import { useEffect, FC } from 'react'
+import { PermissionType } from '@hooks/useStaticLocation'
 import useInitiateRequest, { REQUEST_STATUS } from '@hooks/useInitiateRequest'
 import { Text, Flex } from '@chakra-ui/layout'
 
